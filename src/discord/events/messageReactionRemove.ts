@@ -1,7 +1,7 @@
 import { MessageReaction, PartialMessageReaction, PartialUser, User } from "discord.js";
 import { BattleManager } from "../../battle/battleManager";
 
-export function makeMessageReactionAddHandler(battles: BattleManager) {
+export function makeMessageReactionRemoveHandler(battles: BattleManager) {
     return async (reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) => {
         if (user.bot) return;
 
@@ -20,7 +20,7 @@ export function makeMessageReactionAddHandler(battles: BattleManager) {
         // Ignore self-reactions (author reacting to own GIF)
         if (msg.author?.id && msg.author.id === user.id) return;
 
-        // Only track reactions for messages that are part of the active round in this channel
-        battles.onReaction(msg.channelId, msg.id, user.id);
+        // Only un-track reactions for messages that are part of the active round in this channel
+        battles.onReactionRemove(msg.channelId, msg.id, user.id);
     };
 }
