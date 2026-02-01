@@ -1,6 +1,7 @@
 import { Interaction } from "discord.js";
 import { BattleManager } from "../../battle/battleManager";
 import { handleLeaderboard } from "../../commands/handlers/leaderboard";
+import { handlePoints } from "../../commands/handlers/points";
 import { handleStatus } from "../../commands/handlers/status";
 
 export function makeInteractionCreateHandler(battles: BattleManager) {
@@ -14,6 +15,9 @@ export function makeInteractionCreateHandler(battles: BattleManager) {
                     return;
                 case "leaderboard":
                     await handleLeaderboard(interaction, battles);
+                    return;
+                case "points":
+                    await handlePoints(interaction, battles);
                     return;
                 default:
                     await interaction.reply({ content: "Unknown command.", ephemeral: true });

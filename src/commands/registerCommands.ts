@@ -11,6 +11,17 @@ export const commandData = [
     new SlashCommandBuilder()
         .setName("status")
         .setDescription("Show the current GIF Battle round status in this channel."),
+
+    new SlashCommandBuilder()
+        .setName("points")
+        .setDescription("Show Chaos Points for you or another user.")
+        .addUserOption(opt =>
+            opt
+                .setName("user")
+                .setDescription("The user to check (defaults to you).")
+                .setRequired(false)
+        ),
+
     new SlashCommandBuilder()
         .setName("leaderboard")
         .setDescription("Show the Chaos Points leaderboard (in-memory for now).")
