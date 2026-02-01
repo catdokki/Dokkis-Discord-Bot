@@ -1,10 +1,19 @@
 import { ChatInputCommandInteraction } from "discord.js";
 import { BattleManager } from "../../battle/battleManager";
-import { config } from "../../config";
+import { config, isBattleChannel } from "../../config";
 
 export async function handleStatus(interaction: ChatInputCommandInteraction, battles: BattleManager) {
     if (!interaction.channelId) {
         await interaction.reply({ content: "This command can only be used in a channel.", ephemeral: true });
+        return;
+    }
+
+    if (!isBattleChannel(interaction.channelId) && config.battleChannelIds.size > 0) {
+        const chans = [...config.battleChannelIds].map(id => `<#${id}>`).join(", ");
+        await interaction.reply({
+            content: `GIF Battles are only enabled in: ${chans}`,
+            ephemeral: true,
+        });
         return;
     }
 

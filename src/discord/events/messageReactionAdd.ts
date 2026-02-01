@@ -1,5 +1,6 @@
 import { MessageReaction, PartialMessageReaction, PartialUser, User } from "discord.js";
 import { BattleManager } from "../../battle/battleManager";
+import { isBattleChannel } from "../../config";
 
 export function makeMessageReactionAddHandler(battles: BattleManager) {
     return async (reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) => {
@@ -16,6 +17,9 @@ export function makeMessageReactionAddHandler(battles: BattleManager) {
 
         const msg = reaction.message;
         if (!msg.guild) return;
+
+        // Restrict reaction tracking to configured battle channels (if any).
+        if (!isBattleChannel(msg.channelId)) return;
 
         // Ignore self-reactions (author reacting to own GIF)
         if (msg.author?.id && msg.author.id === user.id) return;

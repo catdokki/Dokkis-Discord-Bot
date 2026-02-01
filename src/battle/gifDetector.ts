@@ -9,8 +9,10 @@ import { Message } from "discord.js";
  */
 
 const GIF_EXT_ANYWHERE = /\.gif(\?.*)?$/i;
-const TENOR = /(^|\.)tenor\.com\//i;
-const GIPHY = /(^|\.)giphy\.com\//i;
+// Note: match inside longer strings (e.g., "check this https://tenor.com/view/... lol")
+// and URLs that start with a scheme.
+const TENOR = /tenor\.com\//i;
+const GIPHY = /giphy\.com\//i;
 
 function isGifLikeUrl(url?: string | null): boolean {
     if (!url) return false;
